@@ -1,7 +1,6 @@
     AREA STACK, NOINIT,READWRITE, ALIGN = 3
         SPACE 1024    ;reserves 1024 bytes for stack
 
-    
     AREA |.vectors|, CODE, READONLY
     EXPORT __Vectors
 __Vectors
@@ -18,19 +17,18 @@ Reset_Handler
     BL main ;call main
     B . ;loop forever if main returns
 
-
-
     AREA |.text|, CODE, READWRITE
-X EQU 5 ;
-Y EQU 7 ;
+X EQU 5 ;define data
+Y EQU 7 ;define data
 	
 main
 
-    MOV r1, #X
-    MOV r2, #Y
-    ADD r0, r1, r2		  ;r0 = r1 + r2 (addition)
-    SUB r4, r1, r2        ; r4 = r1 - r2 (Subtraction)
-    MUL r5, r1, r2        ; r5 = r1 * r2 (Multiplication)
+    MOV r0,  #X
+    MOV r1, #Y
+    CMP r0, r1 ;compare r0 with r1
+
+    MOVLT r2, r0 ;if r0 < r1, move r0 to r2
+    MOVGE r2, r1 ;otherwise move r1 to r2
 	
 STOP
     B STOP

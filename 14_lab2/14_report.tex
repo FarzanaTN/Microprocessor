@@ -1,0 +1,246 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{float}
+
+\begin{document}
+
+
+\begin{titlepage}
+    \begin{center}
+        % \vspace*{1cm}
+        
+        \Huge
+        \textbf{University of Dhaka}
+        
+        \vspace{1cm}
+        \LARGE
+        \textbf{Department of Computer Science and Engineering}
+        
+        \vspace{1cm}
+       
+        \textbf{CSE 3113 - Microprocessor and Assembly Language Lab} \\
+        Batch 28 / 3RD Year 1ST Semester\\
+        \vspace{1cm}
+
+        \noindent\rule{\linewidth}{0.5mm} % Top horizontal line
+
+\begin{center}
+    \LARGE\textbf{Lab 2}
+\end{center}
+
+\noindent\rule{\linewidth}{0.5mm} % Bottom horizontal line
+
+        
+        \vspace{1.5cm}
+        \textbf{Submitted To: \\ }Dr. Upama Kabir \\
+        Dr. Mosarrat Jahan \\
+        Mr. Jargis Ahmed \\
+        Mr. Palash Roy \\
+        \vspace{1cm}
+        
+        \vspace{1cm}
+        \textbf{Submitted By:} \\ Farzana Tasnim (14) \\ 
+        
+        \vfill
+        
+        \Large
+        \vspace{2cm}
+        
+    \end{center}
+\end{titlepage}
+
+\section{Lab Tasks}
+\subsection{Task 1}
+Write an assembly language to perform to add the contents of the
+16-bit variable X to the contents of the 16-bit variable Y and place the
+result in the 16-bit variable Result.
+\subsubsection{Screenshot that shows the state of the system after the code has been loaded.}
+\vspace{0.3cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/1.png}
+    \caption{After build and debugging, this is the state }
+\end{figure}
+
+\subsubsection{Screenshot that shows the situation after the code has been executed.}
+In this section, the R15 which is \textbf{PC}(program Counter) is changing it's value to point to the next instruction. It is a 32-bit register that holds the address of the next instruction to be executed. R13 is \textbf{stack pointer}(Points to the top of the stack), R14 is \textbf{link Register}(Holds the return address after a function call), \textbf{xPSR}(Program Status Register) holds the status flags.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/2.png}
+    \caption{Call of main}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/3.png}
+    \caption{Loaded the address of X in r0 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/4.png}
+    \caption{Loaded the content of X in r1}
+\end{figure}
+We can see the data of a particular address of memory in the memory view. CortexM4 is \textbf{little-endian}. Little-endian is a byte-ordering method where the least significant byte of a multi-byte data value is stored at the lowest memory address.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/5.png}
+    \caption{Loaded the address of Y in r0 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/6.png}
+    \caption{Loaded the content of Y in r2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/7.png}
+    \caption{Added the value of r1, r2 and placed the result in r3}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/8.png}
+    \caption{Loaded the address of Result in r3 and store the data of r3 in Result}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{one/9.png}
+    \caption{End state }
+\end{figure}
+\subsection{Task 2}
+Write an assembly language to perform all the arithmetic operations
+(Addition, Subtraction and Multiplication ) on two variables X and Y.
+You don’t have to handle overflow. You will put the data in memory
+in the form of constants before the program runs.
+\subsubsection{Screenshot that shows the state of the system after the code has been loaded.}
+\vspace{0.3cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/1.png}
+    \caption{After build and debugging, this is the state }
+\end{figure}
+
+\subsubsection{Screenshot that shows the situation after the code has been executed.}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/2.png}
+    \caption{Call of main}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/3.png}
+    \caption{Loaded the address of X in r0 register, From the \textbf{window}(in below right position) view, we can see the value of register content(data)}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/7.png}
+    \caption{Loaded the content of X in r1}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/8.png}
+    \caption{Loaded the address of Y in r0 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/9.png}
+    \caption{Loaded the content of Y in r2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/10.png}
+    \caption{Added the value of r1, r2 register and placed it in r3 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/11.png}
+    \caption{Subtracted the value of r1, r2 register and placed it in r4 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/12.png}
+    \caption{Multiply the value of r1, r2 register and placed it in r5 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/13.png}
+    \caption{Loaded the address of Result\_add in r0 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/14.png}
+    \caption{Store the value of r3 in Result\_add address location}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/15.png}
+    \caption{Loaded the address of Result\_sub in r0 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/16.png}
+    \caption{Store the value of r4 in Result\_sub address location}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/17.png}
+    \caption{Loaded the address of Result\_mul in r0 register}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/18.png}
+    \caption{Store the value of r3 in Result\_mul address location}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{two/19.png}
+    \caption{Stop position}
+\end{figure}
+\subsection{Task 3}
+Write an assembly language to find the smaller of two integer numbers.
+\subsubsection{Screenshot that shows the state of the system after the code has been loaded.}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/1.png}
+    \caption{After build and debugging}
+\end{figure}
+\subsubsection{Screenshot that shows the situation after the code has been executed.}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/2.png}
+    \caption{Call of main}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/3.png}
+    \caption{Move the value of X in r0}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/4.png}
+    \caption{Move the value of Y in r1}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/5.png}
+    \caption{Comparing the value of r0 with r1}
+\end{figure}
+Here in xPSR register field, N field is set to 1 which indicates negative.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/6.png}
+    \caption{Moved r0 value in r2. IT (if-then) is set to GE}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/7.png}
+    \caption{MOVGE is not transfering data as condition is not met. IT is set to disabled}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{three/8.png}
+    \caption{Stop state}
+\end{figure}
+
+\end{document}
