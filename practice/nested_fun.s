@@ -1,3 +1,4 @@
+;use of nested function
     AREA p_two, CODE, READONLY
     ENTRY
     EXPORT main

@@ -1,3 +1,4 @@
+;finding max min using recursion
 	AREA arr_min, DATA, READWRITE
 arr DCD 10, 5, 8, 3, 6, 2, 7 ;example array
 arr_size EQU 7 ;size of example array

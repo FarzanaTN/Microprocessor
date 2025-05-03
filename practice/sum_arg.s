@@ -1,3 +1,4 @@
+;sum of two numbers using arg in function call
     AREA p_two, CODE, READONLY
     ENTRY
     EXPORT main

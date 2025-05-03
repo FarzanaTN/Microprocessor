@@ -1,3 +1,5 @@
+;sum of two numbers using reference in function call
+
 	AREA dec, DATA, READWRITE
 num1 DCD 2 ;first number
 num2 DCD 3 ;second number

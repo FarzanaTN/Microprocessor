@@ -1,3 +1,4 @@
+;factorial of n
         AREA STACK, NOINIT, READWRITE
         ALIGN 4
 stack_space SPACE 0x100        ; Allocate stack

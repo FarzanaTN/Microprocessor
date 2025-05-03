@@ -1,3 +1,4 @@
+;basic string operation 
     AREA STACK, NOINIT, READWRITE, ALIGN = 3
     SPACE 1024
 
