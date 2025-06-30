@@ -1,62 +1,33 @@
-;find max from numbers
-    AREA STACK, NOINIT, READWRITE, ALIGN = 3
-    SPACE 1024
+        AREA    data, DATA, READWRITE
+        ALIGN   4
+numbers DCD     1, -2, 0, 7, 10     ; the numbers array
+n       DCD     5                   ; the number of elements
 
-    AREA |.vector|, CODE, READONLY
-    EXPORT __Vectors
-__Vectors
-    DCD __stack_top             ; Initial value of stack pointer (top of the stack)
-    DCD Reset_Handler           ; Address of Reset handler (entry point after reset)
-    DCD 0                       ; NMI handler (placeholder)
-    DCD 0
+        AREA    code, CODE, READONLY
+        ENTRY
+        EXPORT  main
 
-    ;Define the top of the stack
-    AREA |.text|, CODE, READONLY
-__stack_top EQU STACK + 1024 ;caluculate the top of the stack(end of 1KB stack)
-
-    ;Define the reset handler function
-    EXPORT Reset_Handler
-Reset_Handler
-    BL main                     ; Branch with link to the main (Call main)
-    B .                         ; Loop forever if main returns
-
-    AREA |.data|, DATA, READONLY
-numbers DCD 1, -2, 0, 4, 5
-n       DCD 5
-
-    AREA |.data2|, DATA, READWRITE
-large 
-
-    AREA |.text|, CODE, READWRITE
 main
-    LDR r0, =numbers    ; r0 points to numbers array
-    LDR r1, =n
-    LDR r1, [r1]         ; r1 = number of elements (5)
+        LDR     r0, =numbers        ; r0 -> pointer to numbers array
+        LDR     r1, =n              ; r1 -> pointer to n
+        LDR     r2, [r1]            ; r2 = value of n
+        MOV     r3, #1              ; r3 = loop index (starts from 1)
+        LDR     r4, [r0]            ; r4 = max = numbers[0]
+        ADD     r0, r0, #4          ; move pointer to numbers[1]
 
-    LDR r2, [r0]         ; Load first number into r2 (initialize largest)
+loop
+        CMP     r3, r2              ; if r3 == n, stop
+        BEQ     stop
 
-    MOV r3, #1           ; r3 = loop index (start from second element)
+        LDR     r5, [r0]            ; r5 = current number
+        CMP     r5, r4              ; compare current with max
+        MOVGT   r4, r5              ; if current > max, update max
 
+        ADD     r0, r0, #4          ; move to next number
+        ADD     r3, r3, #1          ; increment loop index
+        B       loop
 
+stop
+        B       stop                ; infinite loop to stop
 
-LOOP 
-    CMP r3, r1           ; if index == n, end of array
-    BEQ DONE
-
-    LDR r4, [r0, r3, LSL #2] ; Load numbers[r3]
-    CMP r4, r2
-    BLS SKIP             ; If r4 <= r2, skip updating
-    MOV r2, r4           ; Else, update largest = r4
-
-SKIP
-    ADD r3, r3, #1       ; r3++
-    B LOOP
-
-DONE
-    LDR r5, =large
-    STR r2, [r5]         ; Store largest number into variable "large"
-
-
-STOP
-    B STOP
-    END
+        END

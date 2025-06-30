@@ -1,32 +1,42 @@
-;sum of two numbers using reference in function call
+        AREA data, DATA, READWRITE
+        ALIGN 4
 
-	AREA dec, DATA, READWRITE
-num1 DCD 2 ;first number
-num2 DCD 3 ;second number
-result DCD 0 ;result variable
-	AREA main_prog, CODE, READONLY
-	ENTRY
-	EXPORT main
-		
-sum
-	POP {R3,R4,R5}
-    LDR R3, [R3] ;load arg1 from memory
-    LDR R4, [R4] ;load arg2 from memory
-    ADD R3, R3, R4 ;add arg1 and arg2
-    STR R3, [R5] ;store the result in memory
-	BX lr
-    ENDP
-	
+num1    DCD     5              ; first number
+num2    DCD     1              ; second number
+sum     DCD     0               ; to store the result
+
+        AREA code, CODE, READONLY
+        ENTRY
+        EXPORT main
+
 main
-	LDR R0, =num1 ;address of first number
-	LDR R1, =num2 ;address of second number
-	LDR R2, =result ;address of result variable
-	PUSH {R0,R1,R2}
-	BL sum ;call the sum function
-	LDR R2,[r2]
-	B stop ;end of program
-	
+        LDR     r0, =num1        ; r0 = &num1
+        LDR     r1, =num2        ; r1 = &num2
+        BL      add_by_reference ; call add_by_reference(&num1, &num2)
 
-	
-stop B stop ;end of code
-	END
+        LDR     r2, =sum         ; r2 = &sum
+        STR     r0, [r2]         ; store result in sum
+
+stop
+        B       stop             ; infinite loop
+
+; ---------------------------------------------------------
+; Function: add_by_reference
+; Input:
+;   r0 = pointer to num1
+;   r1 = pointer to num2
+; Output:
+;   r0 = value at *r0 + value at *r1
+; ---------------------------------------------------------
+
+add_by_reference
+        PUSH    {r2, lr}         ; save registers
+
+        LDR     r2, [r0]         ; r2 = *r0 (value at num1)
+        LDR     r0, [r1]         ; r0 = *r1 (value at num2)
+        ADD     r0, r0, r2       ; r0 = *r0 + *r1
+
+        POP     {r2, lr}
+        BX      lr               ; return
+
+        END

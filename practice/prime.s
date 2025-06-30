@@ -1,47 +1,73 @@
-;Write an assembly language program to identify prime numbers from a list of array by calling a function called prime.
-	AREA arr_dec, DATA, READWRITE
+        AREA data, DATA, READWRITE
+        ALIGN   4
 
-numbers DCD 7,4,3,5
-prm DCD 0,0,0,0
-	
-	AREA prime_number,CODE,READONLY
-	ENTRY
-	EXPORT main
+SIZE    EQU     6
+
+numbers     DCD     11, 2, 3, 4, 5, 6      ; list of numbers
+is_prime_array    DCD     0, 0, 0, 0, 0, 0      ; output: 1 if prime, 0 otherwise
+
+        AREA code, CODE, READONLY
+        ENTRY
+        EXPORT main
+
+main
+        LDR     r4, =numbers        ; r4 = pointer to numbers array
+        LDR     r5, =is_prime_array      ; r5 = pointer to output array
+        MOV     r6, #0              ; r6 = loop counter (index)
+
+loop
+        CMP     r6, #SIZE
+        BGE     end_program         ; if index >= SIZE, exit
+
+        LDR     r0, [r4, r6, LSL #2] ; r0 = numbers[index]
+        BL      prime               ; call prime(r0), result in r0
+
+        STR     r0, [r5, r6, LSL #2] ; store result in is_prime[index]
+
+        ADD     r6, r6, #1
+        B       loop
+
+end_program
+stop
+        B       stop                ; halt
+
+;------------------------------------------------------
+; prime function
+; Input: r0 = number
+; Output: r0 = 1 if prime, 0 if not
+; Uses: r1–r3
+;------------------------------------------------------
+
 prime
-	PUSH {R3,R4,R5,R6}
-	MOV R4,#2 ;divisor start from 2
-	CMP R0,#2
-	BLT not_prime
+        PUSH    {r1-r3, lr}
+
+        CMP     r0, #2
+        BLT     not_prime           ; 0 and 1 are not prime
+
+        MOV     r1, #2              ; divisor = 2
+
+check_loop
+        MOV     r2, r0
+        CMP     r1, r2
+        BGE     is_prime            ; if divisor >= number, it's prime
+
+        UDIV    r3, r0, r1          ; r3 = number / divisor
+        MUL     r3, r3, r1          ; r3 = (number / divisor) * divisor
+        CMP     r3, r0
+        BEQ     not_prime           ; divisible ⇒ not prime
+
+        ADD     r1, r1, #1
+        B       check_loop
+
 is_prime
-	CMP R0,R4 ;check if the R4 is reached the value of R0
-	BEQ prime_cnf
-	SDIV R5,R0,R4
-	MUL R5,R5,R4 
-	CMP R0,R5
-	BEQ not_prime
-	ADDS R4,R4,#1 ; increase R4
-	B is_prime
-prime_cnf
-	POP {R3,R4,R5,R6}
-	STR R0,[R3],#4
-	BX LR
-	ENDP
+        MOV     r0, #1
+        B       done
 
 not_prime
-	POP {R3,R4,R5,R6}
-	BX LR
-	ENDP
-main
-	LDR R3,=prm
-	LDR R4,=numbers
-	MOV R5,#4 ;size of array
-	MOV R6,#4 ;size of array
-loop
-	LDR R0,[R4],#4
-	BL prime
-	SUB R6,R6,#1
-	CMP R6,#0
-	BNE loop
-	
-stop B stop ; end of code
-	END
+        MOV     r0, #0
+
+done
+        POP     {r1-r3, lr}
+        BX      lr
+
+        END
