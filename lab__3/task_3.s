@@ -1,6 +1,6 @@
         AREA    data, DATA, READWRITE
         ALIGN   4
-numbers DCD     1, -2, 0, 7, 10     ; the numbers array
+numbers DCD     1, 2, 0, 7, 10     ; the numbers array
 n       DCD     5                   ; the number of elements
 
         AREA    code, CODE, READONLY
